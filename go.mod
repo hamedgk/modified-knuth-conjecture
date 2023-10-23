@@ -1,0 +1,3 @@
+module knuth
+
+go 1.21.3
