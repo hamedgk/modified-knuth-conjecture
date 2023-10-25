@@ -32,3 +32,7 @@ func (list Queue) Dequeue() (Node, bool){
 func (list Queue) Front() *list.Element{
 	return list.queue.Front()
 }
+
+func (list Queue) Len() int{
+	return list.queue.Len()
+}
