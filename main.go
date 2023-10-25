@@ -3,24 +3,33 @@ package main
 import (
 	"fmt"
 	"knuth/data_structures"
+	"os"
+	"strconv"
 )
 
 func main() {
-	queue := data_structures.NewQueue()
-	goal := 111.0
+	input := os.Args[1]
+	goal, err := strconv.ParseFloat(input, 64)
+	if err != nil {
+		fmt.Println(err.Error()) // 3.1415927410125732
+		return
+	}
+
+	explored := map[float64]bool{}
+	frontier := data_structures.NewQueue()
 
 	for {
-		if queue.IsEmpty() {
+		if frontier.IsEmpty() {
 			fmt.Println("empty frontier")
 			return
 		}
-		value, ok := queue.Dequeue()
-		if node, ok := value.IsGoal(goal); ok {
+		value, ok := frontier.Dequeue()
+		if node, found := value.IsGoal(goal); found {
 			data_structures.TraceBack(node)
 			return
 		}
 		if ok {
-			value.Expand(queue)
+			value.Expand(frontier, explored)
 		}
 	}
 }
