@@ -25,7 +25,7 @@ func NewNode() Node {
 	return Node{Parent: nil, Children: []Node{}, Operator: None, Result: 4.0}
 }
 
-func (node *Node) Expand(queue Queue) {
+func (node *Node) Expand(queue Queue, explored map[float64]bool) {
 	sqrtNode := Node{Parent: node, Children: []Node{}, Operator: Sqrt, Result: math.Sqrt(node.Result)}
 	floorNode := Node{Parent: node, Children: []Node{}, Operator: Floor, Result: math.Floor(node.Result)}
 	multiply5Node := Node{Parent: node, Children: []Node{}, Operator: TimesFive, Result: node.Result * 5.0}
@@ -37,7 +37,10 @@ func (node *Node) Expand(queue Queue) {
 	}
 	node.Children = children
 	for _, node := range children {
-		queue.Enqueue(node)
+		if !explored[node.Result] {
+			queue.Enqueue(node)
+			explored[node.Result] = true
+		}
 	}
 }
 
@@ -51,17 +54,18 @@ func (node *Node) IsGoal(goal float64) (Node, bool) {
 
 func TraceBack(node Node) {
 	if node.Parent == nil {
+		fmt.Printf("init=(%.2f)", node.Result)
 		return
 	}
 
 	TraceBack(*node.Parent)
 	switch node.Operator {
 	case Sqrt:
-		fmt.Printf("Sqrt -> ")
+		fmt.Printf(" -> Sqrt=(%.2f)", node.Result)
 	case Floor:
-		fmt.Printf("Floor -> ")
+		fmt.Printf(" -> Floor=(%.2f)", node.Result)
 	case TimesFive:
-		fmt.Printf("*5 -> ")
+		fmt.Printf(" -> *5=(%.2f)", node.Result)
 	default:
 		return
 	}
