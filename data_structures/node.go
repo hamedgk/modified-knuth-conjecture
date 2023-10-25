@@ -15,27 +15,25 @@ const (
 )
 
 type Node struct {
-	Parent   *Node
-	Children []Node
+	Parent *Node
 	Operator Operation
 	Result   float64
 }
 
 func NewNode() Node {
-	return Node{Parent: nil, Children: []Node{}, Operator: None, Result: 4.0}
+	return Node{Parent: nil, Operator: None, Result: 4.0}
 }
 
 func (node *Node) Expand(queue Queue, explored map[float64]bool) {
-	sqrtNode := Node{Parent: node, Children: []Node{}, Operator: Sqrt, Result: math.Sqrt(node.Result)}
-	floorNode := Node{Parent: node, Children: []Node{}, Operator: Floor, Result: math.Floor(node.Result)}
-	multiply5Node := Node{Parent: node, Children: []Node{}, Operator: TimesFive, Result: node.Result * 5.0}
+	sqrtNode := Node{Parent: node, Operator: Sqrt, Result: math.Sqrt(node.Result)}
+	floorNode := Node{Parent: node, Operator: Floor, Result: math.Floor(node.Result)}
+	multiply5Node := Node{Parent: node, Operator: TimesFive, Result: node.Result * 5.0}
 
 	children := []Node{
 		floorNode,
 		sqrtNode,
 		multiply5Node,
 	}
-	node.Children = children
 	for _, node := range children {
 		if !explored[node.Result] {
 			queue.Enqueue(node)
