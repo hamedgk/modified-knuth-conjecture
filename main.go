@@ -17,6 +17,7 @@ func main() {
 
 	explored := map[float64]bool{}
 	frontier := data_structures.NewQueue()
+	frontier.Enqueue(data_structures.Node{Parent: nil, Operator: data_structures.None, Result: 4.0})
 
 	for {
 		if frontier.IsEmpty() {

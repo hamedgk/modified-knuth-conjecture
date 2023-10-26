@@ -20,10 +20,6 @@ type Node struct {
 	Result   float64
 }
 
-func NewNode() Node {
-	return Node{Parent: nil, Operator: None, Result: 4.0}
-}
-
 func (node *Node) Expand(queue Queue, explored map[float64]bool) {
 	sqrtNode := Node{Parent: node, Operator: Sqrt, Result: math.Sqrt(node.Result)}
 	floorNode := Node{Parent: node, Operator: Floor, Result: math.Floor(node.Result)}
