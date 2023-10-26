@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-type Operation int
+type Operation uint8
 
 const (
 	Sqrt Operation = iota
